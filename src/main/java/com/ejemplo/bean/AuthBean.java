@@ -32,6 +32,13 @@ public class AuthBean implements Serializable {
   @Inject
   private UserDAO userDAO;
 
+  public String getUser() {
+    if (userLogged != null) {
+      return userLogged.getUsername();
+    }
+    return "Invited";
+  }
+
   public String redirect() {
     if (userLogged != null) {
       return "/views/dashboard?faces-redirect=true";
