@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:h="jakarta.faces.html"
+                xmlns:f="jakarta.faces.core"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/templates/layout.xhtml">
+
+  <ui:define name="content">
+    <h:form id="formUsers">
+      <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" responsive="true" width="350">
+        <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no ui-button-flat" />
+        <p:commandButton value="Yes, delete" type="button" styleClass="ui-confirmdialog-yes ui-button-danger" />
+      </p:confirmDialog>
+
+      <p:growl id="msgs" showDetail="true" showSummary="false" skipDetailIfEqualsSummary="true" />
+
+      <div class="mb-4">
+        <p:commandButton value="New User" icon="pi pi-plus" actionListener="#{userBean.prepareNewUser()}"
+          update="pnlDetalle" process="@this" oncomplete="PF('dlgUser').show()" styleClass="p-button-success">
+          <p:resetInput target=":formUsers:pnlDetalle" />
+        </p:commandButton>
+      </div>
+
+      <p:dialog header="User Data" widgetVar="dlgUser" modal="true" showEffect="fade" hideEffect="fade"
+        responsive="true" width="400" focus="username">
+
+        <p:outputPanel id="pnlDetalle" class="ui-fluid">
+          <div class="field mb-3">
+            <p:outputLabel for="username">Usuario</p:outputLabel>
+            <p:inputText id="username" value="#{userBean.user.username}" required="true" label="User Name"
+              requiredMessage="UserName is required." />
+          </div>
+          <div class="field mb-3">
+            <p:outputLabel for="email">Email</p:outputLabel>
+            <p:inputText id="email" value="#{userBean.user.email}" required="true" label="Email"
+              requiredMessage="Email is required." />
+          </div>
+          <div class="field mb-3">
+            <p:outputLabel for="password">Contraseña</p:outputLabel>
+            <p:password id="password" value="#{userBean.user.password}" required="true" label="Password"
+              requiredMessage="Password is required." />
+          </div>
+        </p:outputPanel>
+
+        <f:facet name="footer">
+          <p:commandButton value="Save" icon="pi pi-check" actionListener="#{userBean.save()}"
+            update="pnlDetalle tblUsers :formUsers:msgs" process="pnlDetalle @this" />
+          <p:commandButton value="Cancel" icon="pi pi-times" onclick="PF('dlgUser').hide()" type="button"
+            styleClass="p-button-text" />
+        </f:facet>
+      </p:dialog>
+
+      <p:spacer height="20" />
+
+      <!-- Table Users -->
+      <p:dataTable id="tblUsers" value="#{userBean.lista}" var="u" editable="true" rows="10" paginator="true"
+        styleClass="p-datatable-gridlines">
+
+        <p:column headerText="ID">
+          <h:outputText value="#{u.id}" />
+        </p:column>
+
+        <p:column headerText="User">
+          <h:outputText value="#{u.username}" />
+        </p:column>
+
+        <p:column headerText="Email">
+          <h:outputText value="#{u.email}" />
+        </p:column>
+
+        <p:column headerText="Actions">
+          <p:commandButton title="Delete User" icon="pi pi-trash" actionListener="#{userBean.delete(u.id)}"
+            update=":formUsers:tblUsers :formUsers:msgs" process="@this"
+            styleClass="rounded-button ui-button-danger ui-button-flat">
+            <p:confirm header="Confirm" message="¿Are you sure you want to eliminate #{u.username}?"
+              icon="pi pi-exclamation-triangle" />
+          </p:commandButton>
+        </p:column>
+
+      </p:dataTable>
+
+    </h:form>
+
+  </ui:define>
+
+</ui:composition>

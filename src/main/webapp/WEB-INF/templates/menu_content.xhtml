@@ -1,0 +1,18 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:p="http://primefaces.org/ui">
+    
+    <p:menu style="width:100%; border:none;">
+        <p:submenu label="Dashboard" icon="pi pi-home">
+            <p:menuitem value="Resumen" outcome="/views/dashboard" icon="pi pi-chart-line"/>
+            <p:menuitem value="Estadísticas" outcome="/views/estadisticas" icon="pi pi-chart-bar"/>
+        </p:submenu>
+
+        <p:submenu label="Usuarios" icon="pi pi-users">
+            <p:menuitem value="Lista de Usuarios" outcome="/views/users" icon="pi pi-list"/>
+        </p:submenu>
+
+        <p:menuitem value="Productos" outcome="/views/productos" icon="pi pi-box"/>
+        <p:menuitem value="Configuración" outcome="/views/configuracion" icon="pi pi-cog"/>
+    </p:menu>
+</ui:composition>

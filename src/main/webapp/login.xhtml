@@ -1,0 +1,61 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+    <title>Login</title>
+
+    <!-- PrimeFlex -->
+    <link rel="stylesheet" href="https://unpkg.com/primeflex@3.3.1/primeflex.css"></link>
+
+</h:head>
+
+<h:body class="surface-ground">
+
+<!-- 🔷 Topbar -->
+<div class="flex align-items-center justify-content-between px-4 py-3 shadow-2 surface-card">
+    <span class="text-xl font-bold text-900">
+        LIBRARY SYSTEM
+    </span>
+</div>
+
+<!-- 🔷 Contenedor -->
+<div class="flex align-items-center justify-content-center" style="height: calc(100vh - 70px);">
+
+    <h:form class="w-full sm:w-10 md:w-6 lg:w-4">
+      <p:growl id="msgs" showDetail="true" showSummary="false" skipDetailIfEqualsSummary="true"/>
+
+        <p:panel header="Sign in" class="shadow-4 border-round-xl">
+
+            <div class="field mb-3">
+                <p:inputText
+                  id="email"
+                  value="#{authBean.email}"
+                  required="true"
+                  placeholder="Email"
+                  class="w-full"
+                  requiredMessage="Email is required." />
+            </div>
+
+            <div class="field mb-4">
+                <p:password
+                  id="password"
+                  value="#{authBean.password}"
+                  required="true"
+                  placeholder="Password"
+                  class="w-full"
+                  toggleMask="true"
+                  requiredMessage="Password is required."/>
+            </div>
+
+            <p:commandButton value="Login" action="#{authBean.login}" ajax="false" update="msgs" icon="pi pi-sign-in" />
+
+        </p:panel>
+
+    </h:form>
+
+</div>
+
+</h:body>
+
+</html>
